@@ -25,7 +25,9 @@ resource "aws_instance" "bastion" {
   ]
   
   lifecycle {
-    ignore_changes = "security_groups"
+    ignore_changes = [
+      "security_groups"
+    ]
   }
   
   key_name             = "${var.key_name}"
