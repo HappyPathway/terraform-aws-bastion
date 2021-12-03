@@ -9,6 +9,6 @@ output "bastion_sec_group" {
 }
 
 output "key_name" {
-  value = "${var.key_name}"
+  value       = "${var.key_name}"
   description = "Name of KeyPair"
 }

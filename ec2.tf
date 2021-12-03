@@ -15,22 +15,22 @@ data "aws_ami" "ubuntu" {
 }
 
 resource "aws_instance" "bastion" {
-  ami           = "${data.aws_ami.ubuntu.id}"
-  instance_type = "${var.instance_type}"
-  subnet_id     = "${var.public_subnet_id}"
+  ami           = data.aws_ami.ubuntu.id
+  instance_type = var.instance_type
+  subnet_id     = var.public_subnet_id
 
   security_groups = [
-    "${aws_security_group.bastion.id}",
-    "${var.admin_sg}",
+    aws_security_group.bastion.id,
+    var.admin_sg,
   ]
-  
+
   lifecycle {
     ignore_changes = [
       "security_groups"
     ]
   }
-  
-  key_name             = "${var.key_name}"
-  iam_instance_profile = "${aws_iam_instance_profile.bastion_ro.name}"
-  tags                 = "${merge(map("network", "${var.network_name}", "Name", "${var.network_name}-bastion"), var.resource_tags)}"
+
+  key_name             = var.key_name
+  iam_instance_profile = aws_iam_instance_profile.bastion_ro.name
+  tags                 = merge({ "network" = var.network_name, "Name" = "${var.network_name}-bastion" }, var.resource_tags)
 }
