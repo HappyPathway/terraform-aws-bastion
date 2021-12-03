@@ -26,7 +26,7 @@ resource "aws_instance" "bastion" {
 
   lifecycle {
     ignore_changes = [
-      "security_groups"
+      security_groups
     ]
   }
 
